@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import LeftSideNav from '../LeftSideNav/LeftSideNav';
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
@@ -11,7 +12,7 @@ const Header = () => {
         <div>
             <Navbar collapseOnSelect className='mb-4' expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">The Dragon Star News</Navbar.Brand>
+                    <Navbar.Brand><Link to='/'>The Dragon News</Link> </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
