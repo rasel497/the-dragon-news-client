@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 // import { Button, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -7,6 +7,7 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 const Register = () => {
     // Fourt Step2:: 
     const { createUser } = useContext(AuthContext);
+    const [error, setError] = useState(); //error:1.4
 
     const handleOnsubmitForm = event => {
         event.preventDefault() // no reload // must add at first
@@ -23,9 +24,13 @@ const Register = () => {
             .then((result) => {
                 const user = result.user;
                 console.log(user);
+                setError(''); //error:2.4
                 form.reset();
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error(error);
+                setError(error.message); //error:3.4
+            })
 
     }
 
@@ -55,6 +60,11 @@ const Register = () => {
             <Button variant="primary" type="submit">
                 Register
             </Button>
+
+            {/* error: 4.4 */}
+            <Form.Text className='text-danger'>
+                {error}
+            </Form.Text>
         </Form>
     );
 };

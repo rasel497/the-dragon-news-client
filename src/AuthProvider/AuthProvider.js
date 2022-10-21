@@ -6,16 +6,13 @@ import app from '../firebase/firebase.config';
 // export write must
 export const AuthContext = createContext();
 
-// 5.google method-01 > [5.thke setup start]
-const auth = getAuth(app)
+
+const auth = getAuth(app); //5.google method-01 > [5.thke setup start]
 
 const AuthProvider = ({ children }) => {
-    // initial check
-    // const user = { displayName: 'Mr. Matas Khan' };
+    // const user = { displayName: 'Mr. Matas Khan' }; //initial check
     // console.log(user);
-
-    // Third Step... Now we use useState and onAuthStateChanged and ingore initial
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null); //Third Step... Now we use useState and onAuthStateChanged and ingore initial
 
     // 5.google method-02 createContext..[for Next we useConyext]
     const providerLogin = (provider) => {

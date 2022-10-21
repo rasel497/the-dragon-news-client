@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
@@ -8,10 +8,8 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const Login = () => {
     const { signIn } = useContext(AuthContext);
-
-    // finish useNavigate kore amra root page chole jabo 
-    //mne login succes hole home page chole asbo
-    const navigate = useNavigate();
+    const [error, setError] = useState('');  //error:1.4-error password wirong email is user not found
+    const navigate = useNavigate(); //mne login succes hole home/root page niye jbe jabe
 
 
     const handleOnSubmit = event => {
@@ -27,9 +25,13 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 form.reset();
+                setError(''); //error:2.4
                 navigate('/') // login and home page show
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                setError(error.message); //error:3.4
+            })
 
     }
 
@@ -49,6 +51,11 @@ const Login = () => {
                 <Button variant="primary" type="submit">
                     Login
                 </Button>
+
+                {/* error: 4.4 */}
+                <Form.Text className='text-danger'>
+                    {error}
+                </Form.Text>
             </Form>
 
         </div>
