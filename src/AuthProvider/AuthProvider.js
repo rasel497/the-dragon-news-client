@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getAuth, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import app from '../firebase/firebase.config';
 
 
@@ -22,9 +22,22 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, provider);
     }
 
+    // Five Step2:: reg form make btstrp thke then amra > Password Authen jabo
+    const createUser = (eamil, password) => {
+        return createUserWithEmailAndPassword(auth, eamil, password)
+    }
+    // Six
+    const signIn = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password)
+    }
 
-    // Third Step:: Manage users er first setup
-    // its called observe
+    // Foruth Step:: >Google
+    const logOut = () => {
+        return signOut(auth);
+    }
+
+    // Third Step1:: >Manage users er first setup
+    // its called observe--ei kaj sesh reg form make btstrp thke then amra > Password Authen jabo
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             console.log('user inside auth state change', currentUser);
@@ -39,7 +52,7 @@ const AuthProvider = ({ children }) => {
     // 5.google method-03 
     //eikhne providerLoginGoogle useContext use korer jonno entry kora
     //kaj sesh eiber jei file a ba button useContext use korbo ekhne onClick set kore handler er maddhome use korbo
-    const authInfo = { user, providerLogin }
+    const authInfo = { user, providerLogin, logOut, createUser, signIn }
 
     return (
         <AuthContext.Provider value={authInfo}>

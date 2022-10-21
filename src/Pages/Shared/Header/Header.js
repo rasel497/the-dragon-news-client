@@ -8,10 +8,20 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 import LeftSideNav from '../LeftSideNav/LeftSideNav';
 import { FaUser } from 'react-icons/fa';
+import Button from 'react-bootstrap/Button';
+
 
 // AuthContext
 const Header = () => {
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
+
+    // logOut Handle
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => console.error(error))
+    }
+
 
     return (
         <div>
@@ -36,17 +46,28 @@ const Header = () => {
                             </NavDropdown>
                         </Nav>
                         <Nav>
-                            <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
+                            <Nav.Link href="#deets">
+                                {
+                                    user?.uid ?
+                                        <>
+                                            <span>{user?.displayName}</span>
+                                            <Button onClick={handleLogOut} variant="light">Logout</Button>{' '}
+                                        </>
+                                        :
+                                        <>
+                                            <Link to='/login'>Login</Link>
+                                            <Link to='/register'> Register</Link>
+                                        </>
+                                }
+                            </Nav.Link>
                             <Nav.Link eventKey={2} href="#memes">
 
-                                {user.photoURL ?
+                                {user?.photoURL ?
                                     <Image
-                                        style={{ height: '30x' }} roundedCircle
-                                        src={user.photoURL}></Image>
-                                    :
-                                    <FaUser></FaUser>
+                                        style={{ height: '30px' }} roundedCircle
+                                        src={user?.photoURL}></Image>
+                                    : <FaUser></FaUser>
                                 }
-
 
                             </Nav.Link>
                         </Nav>
@@ -55,8 +76,8 @@ const Header = () => {
                         </div>
                     </Navbar.Collapse>
                 </Container>
-            </Navbar>
-        </div>
+            </Navbar >
+        </div >
     );
 };
 
