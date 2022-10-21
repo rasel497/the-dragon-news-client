@@ -1,11 +1,18 @@
 import React, { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
+
 
 
 const Login = () => {
     const { signIn } = useContext(AuthContext);
+
+    // finish useNavigate kore amra root page chole jabo 
+    //mne login succes hole home page chole asbo
+    const navigate = useNavigate();
+
 
     const handleOnSubmit = event => {
         event.preventDefault()
@@ -20,6 +27,7 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 form.reset();
+                navigate('/') // login and home page show
             })
             .catch(error => console.error(error));
 
