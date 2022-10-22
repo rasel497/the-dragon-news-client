@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getAuth, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getAuth, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import app from '../firebase/firebase.config';
 
 
@@ -38,6 +38,11 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, profile);
     }
 
+    //email verification from Firebase> Mange Users
+    const verifyEmail = () => {
+        return sendEmailVerification(auth.currentUser);
+    }
+
     // Foruth Step:: >Google
     const logOut = () => {
         setLoading(true);
@@ -68,7 +73,8 @@ const AuthProvider = ({ children }) => {
         logOut,
         createUser,
         signIn,
-        updtaeUserProfile
+        updtaeUserProfile,
+        verifyEmail
     }
 
     return (

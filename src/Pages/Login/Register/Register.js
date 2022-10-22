@@ -4,12 +4,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 
 
 const Register = () => {
     // Fourt Step2:: 
-    const { createUser, updtaeUserProfile } = useContext(AuthContext);
+    const { createUser, updtaeUserProfile, verifyEmail } = useContext(AuthContext);
     const [error, setError] = useState(); //error:1.4
     const [termsAccepted, setTermsAccepted] = useState(false);
 
@@ -31,12 +32,16 @@ const Register = () => {
                 setError(''); //error:2.4
                 form.reset();
                 handleUpdateUserProfile(name, photoURL);
+                handleEmailVerification(); // for email verification
+                toast.success('Please verify your email address login'); // set any central point <Toaster/> app.js toast
             })
             .catch(error => {
                 console.error(error);
                 setError(error.message); //error:3.4
             })
     }
+
+    // update uaser profile
     const handleUpdateUserProfile = (name, photoURL) => {
         const profile = {
             displayName: name,
@@ -45,6 +50,12 @@ const Register = () => {
         updtaeUserProfile(profile)
             .then(() => { })
             .catch(error => console.error(error));
+    }
+    // handle verifyEmail
+    const handleEmailVerification = () => {
+        return verifyEmail()
+            .then(() => { })
+            .catch(erro => console.error(error));
     }
 
     // handle for TermsAndConditions
