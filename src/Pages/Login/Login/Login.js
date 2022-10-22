@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, } from 'react-router-dom';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 
@@ -11,9 +11,11 @@ const Login = () => {
     const [error, setError] = useState('');  //error:1.4-error password wirong email is user not found
     const navigate = useNavigate(); //mne login succes hole home/root page niye jbe jabe
 
+    const location = useLocation();
+    const from = location.state?.from.pathname || "/";
 
     const handleOnSubmit = event => {
-        event.preventDefault()
+        event.preventDefault();
 
         const form = event.target;
         const email = form.email.value;
@@ -26,7 +28,7 @@ const Login = () => {
                 console.log(user);
                 form.reset();
                 setError(''); //error:2.4
-                navigate('/') // login and home page show
+                navigate(from, { replace: true }); // login and home page show
             })
             .catch(error => {
                 console.error(error);

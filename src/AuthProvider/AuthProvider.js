@@ -13,23 +13,29 @@ const AuthProvider = ({ children }) => {
     // const user = { displayName: 'Mr. Matas Khan' }; //initial check
     // console.log(user);
     const [user, setUser] = useState(null); //Third Step... Now we use useState and onAuthStateChanged and ingore initial
+    const [loading, setLoading] = useState(true);
+
 
     // 5.google method-02 createContext..[for Next we useConyext]
     const providerLogin = (provider) => {
+        setLoading(true);
         return signInWithPopup(auth, provider);
     }
 
     // Five Step2:: reg form make btstrp thke then amra > Password Authen jabo
     const createUser = (eamil, password) => {
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, eamil, password)
     }
     // Six
     const signIn = (email, password) => {
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
     }
 
     // Foruth Step:: >Google
     const logOut = () => {
+        setLoading(true);
         return signOut(auth);
     }
 
@@ -38,7 +44,8 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             console.log('user inside auth state change', currentUser);
-            setUser(currentUser)
+            setUser(currentUser);
+            setLoading(false);
         });
         return () => {
             unsubscribe();
@@ -49,7 +56,7 @@ const AuthProvider = ({ children }) => {
     // 5.google method-03 
     //eikhne providerLoginGoogle useContext use korer jonno entry kora
     //kaj sesh eiber jei file a ba button useContext use korbo ekhne onClick set kore handler er maddhome use korbo
-    const authInfo = { user, providerLogin, logOut, createUser, signIn }
+    const authInfo = { user, loading, providerLogin, logOut, createUser, signIn }
 
     return (
         <AuthContext.Provider value={authInfo}>
