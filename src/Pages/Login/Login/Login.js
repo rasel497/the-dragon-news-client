@@ -8,7 +8,7 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 
 const Login = () => {
-    const { signIn } = useContext(AuthContext);
+    const { signIn, setLoading } = useContext(AuthContext);
     const [error, setError] = useState('');  //error:1.4-error password wirong email is user not found
     const navigate = useNavigate(); //mne login succes hole home/root page niye jbe jabe
 
@@ -38,11 +38,14 @@ const Login = () => {
                     toast.error('Your email is not verified. Please verify email address we sent you email.')
                 }
 
-
             })
             .catch(error => {
                 console.error(error);
                 setError(error.message); //error:3.4
+            })
+            // unverifed obostay loading spinner jeno na dekha jy
+            .finally(() => {
+                setLoading(false);
             })
 
     }
