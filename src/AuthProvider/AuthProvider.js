@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getAuth, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import app from '../firebase/firebase.config';
 
 
@@ -33,6 +33,11 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
 
+    // update user from firebase > Manage user
+    const updtaeUserProfile = (profile) => {
+        return updateProfile(auth.currentUser, profile);
+    }
+
     // Foruth Step:: >Google
     const logOut = () => {
         setLoading(true);
@@ -56,7 +61,15 @@ const AuthProvider = ({ children }) => {
     // 5.google method-03 
     //eikhne providerLoginGoogle useContext use korer jonno entry kora
     //kaj sesh eiber jei file a ba button useContext use korbo ekhne onClick set kore handler er maddhome use korbo
-    const authInfo = { user, loading, providerLogin, logOut, createUser, signIn }
+    const authInfo = {
+        user,
+        loading,
+        providerLogin,
+        logOut,
+        createUser,
+        signIn,
+        updtaeUserProfile
+    }
 
     return (
         <AuthContext.Provider value={authInfo}>
