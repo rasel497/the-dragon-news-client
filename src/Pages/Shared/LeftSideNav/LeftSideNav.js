@@ -6,7 +6,7 @@ const LeftSideNav = () => {
 
     // outside thke data load korer jonno side effct hisebe amra useEffect use kori
     useEffect(() => {
-        fetch('http://localhost:5000/news-categories')
+        fetch('https://the-dragon-news-server.vercel.app/news-categories')
             .then(res => res.json())
             .then(data => setCategories(data));
     }, [])
